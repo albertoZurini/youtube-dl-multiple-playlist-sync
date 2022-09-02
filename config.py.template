@@ -1,0 +1,14 @@
+class PlayList:
+    def __init__(self, name, url):
+        self.name = name
+        self.url = url
+
+YOUTUBE_DL_PATH = "/usr/local/bin/youtube-dl"
+BASE_DIR = "~/Music"
+PLAYLIST_NAME = "play"
+
+playlists = [
+    PlayList("Psychedelic_techno", "https://www.youtube.com/playlist?list=PLtPfVHWuJ6yECNOyVDxSHDIaGFoLGSrWp"),
+    PlayList("Tech_house", "https://www.youtube.com/playlist?list=PLtPfVHWuJ6yETRTPHjQnLCiUR0zn_c4iw"),
+    PlayList("Deep_house", "https://www.youtube.com/watch?v=Ct0yx7hBjXA&list=PLtPfVHWuJ6yF5vmlv29moXiRWLKzJGbm3"),
+]
