@@ -14,7 +14,7 @@ def get_key_cmd(mp3_path):
     return f"/usr/bin/keyfinder-cli {mp3_path}"
 
 def get_bpm_cmd(mp3_path):
-    return f"/usr/bin/bpm-tag {mp3_path}"
+    return f"/usr/bin/bpm-tag -n {mp3_path}"
 
 def get_camelot(key):
     mappings = {
@@ -52,9 +52,22 @@ def get_bpm_and_key(mp3_path):
         _i = i.decode("utf-8")
         if len(_i) > 4:
             bpm = _i.split(" ")[-2].split(".")[0]
+    try:
+        int(bpm)
+    except Exception as e:
+        print("FATAL: BPM COULD NOT BE DETERMINED!")
+        print("Command:", get_bpm_cmd(mp3_path))
+        print("Output:", bpm_arr)
+        os.exit(1)
     _key = subprocess.Popen(get_key_cmd(mp3_path), stdout=subprocess.PIPE, shell=True).communicate()[0].decode("utf-8").split("\n")[0]
-    key = get_camelot(_key)
 
+    try:
+        key = get_camelot(_key)
+    except Exception as e:
+        print("FATAL: KEY COULD NOT BE DETERMINED!")
+        print("Command:", get_key_cmd(mp3_path))
+        print("Output:", _key)
+        os.exit(1)
     return bpm, key, _key
 
 def increase_progress(state):
@@ -73,7 +86,7 @@ def process_file(path, state, errors):
     info = get_bpm_and_key(path)
 
     if "mp3" not in path:
-        assert Exception("Not an mp3 file")
+        print("Error: not an mp3 file")
 
     if "'" in path:
         quote = "'"
