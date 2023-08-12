@@ -68,11 +68,14 @@ for name in files:
     bpm, key = get_bpm_key(name)
     if bpm < 100:
         bpm *= 2
+
+    if now_bpm is None and bpm > 130:
+        continue
     
     if now_bpm is None or are_songs_similar(now_bpm, now_key, bpm, key):
         now_bpm = bpm
         now_key = key
         lineup.append(name)
     
-
+print(len(lineup))
 print(lineup)

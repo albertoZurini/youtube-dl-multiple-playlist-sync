@@ -1,11 +1,10 @@
 import shlex
 import subprocess
 import os
-import config
 import multiprocessing
 import time
 
-PATH = os.path.join(config.BASE_DIR, config.PLAYLIST_NAME)
+PATH = "/play"
 
 def split(a, n):
     k, m = divmod(len(a), n)

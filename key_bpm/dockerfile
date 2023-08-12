@@ -1,0 +1,25 @@
+FROM archlinux:base-devel
+
+RUN pacman -Syu --needed --noconfirm git
+
+# makepkg user and workdir
+ARG user=makepkg
+RUN useradd --system --create-home $user \
+  && echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
+USER $user
+WORKDIR /home/$user
+
+RUN git clone https://aur.archlinux.org/yay.git \
+  && cd yay \
+  && makepkg -sri --needed --noconfirm \
+  && cd \
+  # Clean up
+  && rm -rf .cache yay
+
+RUN yay -S --noconfirm keyfinder-cli-git bpm-tools
+
+USER root
+RUN pacman -S --noconfirm python python-pip python-debugpy
+
+WORKDIR /src
+USER $user
