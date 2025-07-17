@@ -3,6 +3,7 @@ class PlayList:
         self.name = name
         self.url = url
 
+MAX_THREADS = 8
 YOUTUBE_DL_PATH = "/usr/local/bin/youtube-dl"
 BASE_DIR = "~/Music"
 PLAYLIST_NAME = "play"
